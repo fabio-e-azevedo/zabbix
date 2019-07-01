@@ -1,7 +1,5 @@
-[14/06 17:05] Fabio Eduardo
-    
+#!/usr/bin/env python3.7
 
-#!/usr/bin/env python
 # Discovery de valores de uma macro
 # O delimitador em um valor e outro de ser o | (pipe), exemplo: fabio|azevedo
 # Exemplo do retorno JSON:
@@ -23,13 +21,13 @@
 import sys
 import json
 from zabbix_api import ZabbixAPI
-import ConfigParser
+import configparser
 from os import path
 
 fileconf = '/etc/zabbix/api_script.conf'
 
 if path.exists(fileconf):
-  config = ConfigParser.RawConfigParser()
+  config = configparser.RawConfigParser()
   config.read(fileconf)
 else:
   sys.exit(1)
@@ -46,8 +44,8 @@ values = next((str(item["value"]) for item in host[0]["macros"] if macro in item
 
 result_json =[]
 for v in values:
- element = {'{#NAME}': v}
- result_json.append(element)
-print json.dumps({'data': result_json}, indent=4)
+  element = {'{#NAME}': v}
+  result_json.append(element)
+print(json.dumps({'data': result_json}, indent=4))
 sys.exit(0)
 
